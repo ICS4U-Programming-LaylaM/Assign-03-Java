@@ -73,7 +73,7 @@ class Palindrome {
         int counter;
         long[] depthArray = {0, 1};
         final int baseDepth = 0;
-        String string;
+        String string = "";
 
         // Create a palindrome object
         final Palindrome palindrome = new Palindrome();
@@ -108,14 +108,23 @@ class Palindrome {
 
             // Check each number from the input.txt
             for (counter = 0; counter < stringArray.length; counter++) {
-                depthArray = palindrome.depth(Long.parseLong(
-                    stringArray[counter]), baseDepth);
-                // Create string that displays the depth
-                // of each number and their palindrome
-                string = "The number " + stringArray[counter]
-                     + " is a depth " + depthArray[0]
-                     + " palindrome. Palindrome: "
-                     + depthArray[1];
+                // Handles errors for non integers and negative integers
+                try {
+                    if (Integer.parseInt(stringArray[counter]) < 0) {
+                        string = "Cannot not be negative.";
+                    } else if (Integer.parseInt(stringArray[counter]) >= 0) {
+                        depthArray = palindrome.depth(Long.parseLong(
+                        stringArray[counter]), baseDepth);
+                        // Create string that displays the depth
+                        // of each number and their palindrome
+                        string = "The number " + stringArray[counter]
+                             + " is a depth " + depthArray[0]
+                             + " palindrome. Palindrome: "
+                             + depthArray[1];
+                    }
+                } catch (NumberFormatException e) {
+                    string = "Error, is not an integer.";
+                }
 
                 // Add to a new array
                 depthString.add(string);
